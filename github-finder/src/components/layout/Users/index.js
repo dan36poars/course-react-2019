@@ -1,22 +1,31 @@
-import React, { Component } from 'react'
+import React from 'react'
+import PropTypes from 'prop-types';
 
 import {
-	UserContainer
+  UserContainer
 } from './style';
 
 import UserItem from '../UserItems';
 
-class index extends Component {	
+import Spinner from '../Spinner';
 
-	render() {
-		return (
-			<UserContainer>
-				{this.props.users.map( user => (
-					<UserItem key={user.id} user={user} />
-				))}
-			</UserContainer>
-		)
-	}
+const index = ({ loading, users }) => { 
+    if (loading) {
+      return <Spinner />
+    } else {
+      return (
+        <UserContainer>
+          {users.map( user => (
+            <UserItem key={user.id} user={user} />
+          ))}
+        </UserContainer>
+      )
+    }
 }
 
-export default index
+index.propTypes = {
+  users : PropTypes.array.isRequired,
+  loading: PropTypes.bool.isRequired
+}
+
+export default index;

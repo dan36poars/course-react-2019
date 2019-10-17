@@ -9,7 +9,7 @@ import {
   UserLink
 } from './style';
 
-const index = ({ user : {login, avatar_url, html_url} }) => {
+const index = ({ user : { login, avatar_url, html_url } }) => {
   
   return (
     <UserContainer className="card text-center">
