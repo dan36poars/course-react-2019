@@ -4,32 +4,65 @@ import axios from 'axios';
 
 import Navbar from '../../components/layout/Navbar/Navbar';
 import Users from '../../components/layout/Users';
+import Search from '../../components/layout/Search';
+import Alert from '../../components/layout/Alert';
 
-export default class index extends Component {
+export class index extends Component {
 
     constructor(props) {
         super(props)
-    
+
         this.state = {
-             users: [],
-             loading: false
+            users: [],
+            loading: false,
+            alert : null
         }
     }
 
-    async componentDidMount() {
+
+    searchUsers = async (text) => {
         this.setState({ loading: true });
-        const response = await axios.get(`https://api.github.com/users?client_id=${process.env.REACT_APP_GITHUB_CLIENT_ID}&client_secret=${process.env.REACT_APP_GITHUB_CLIENT_SECRET}`);
-        this.setState({users: response.data, loading: false });
+        const response = await axios.get(`https://api.github.com/search/users?q=${text}&client_id=${process.env.REACT_APP_GITHUB_CLIENT_ID}&client_secret=${process.env.REACT_APP_GITHUB_CLIENT_SECRET}`);
+        this.setState({ users: response.data.items, loading: false });
     }
 
+    handleClearUsers = () => {
+        this.setState({
+            users: [],
+            loading: false
+        });
+    }
+
+    setAlert = ( msg, type ) => {
+      this.setState({
+        alert: {
+          msg,
+          type
+        }
+      });
+      setTimeout(() => this.setState({
+        alert: null
+      }), 5000);
+    } 
+
     render() {
+      const { users, loading } = this.state;
         return (
             <Fragment>
                 <Navbar />
                     <div className="container">
-                        <Users loading={this.state.loading} users={this.state.users} />
+                      <Alert alert={this.state.alert}/>
+                        <Search 
+                            searchUsers={this.searchUsers} 
+                            handleClearUsers={this.handleClearUsers}
+                            showClear={ users.length > 0 ? true : false }
+                            setAlert={this.setAlert}
+                        />
+                        <Users loading={loading} users={users} />
                     </div>
             </Fragment>
         )
     }
 };
+
+export default index;
