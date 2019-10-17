@@ -1,8 +1,7 @@
-import React, { Fragment, Component } from 'react'
+import React, { Fragment, Component } from 'react';
 
 import axios from 'axios';
 
-import Navbar from '../../components/layout/Navbar/Navbar';
 import Users from '../../components/layout/Users';
 import Search from '../../components/layout/Search';
 import Alert from '../../components/layout/Alert';
@@ -45,24 +44,23 @@ export class index extends Component {
       }), 5000);
     } 
 
-    render() {
-      const { users, loading } = this.state;
-        return (
-            <Fragment>
-                <Navbar />
-                    <div className="container">
-                      <Alert alert={this.state.alert}/>
-                        <Search 
-                            searchUsers={this.searchUsers} 
-                            handleClearUsers={this.handleClearUsers}
-                            showClear={ users.length > 0 ? true : false }
-                            setAlert={this.setAlert}
-                        />
-                        <Users loading={loading} users={users} />
-                    </div>
-            </Fragment>
-        )
-    }
+  render() {
+    const { users, loading } = this.state;
+      return (
+        <Fragment>          
+            <div className="container">
+              <Alert alert={this.state.alert}/>
+                <Search 
+                  searchUsers={this.searchUsers} 
+                  handleClearUsers={this.handleClearUsers}
+                  showClear={ users.length > 0 ? true : false }
+                  setAlert={this.setAlert}
+                />
+              <Users loading={loading} users={users} />
+            </div>
+        </Fragment>
+      )
+  }
 };
 
 export default index;
