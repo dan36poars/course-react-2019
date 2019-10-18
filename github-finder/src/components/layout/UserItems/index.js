@@ -1,4 +1,5 @@
 import React from 'react'
+import { Link } from 'react-router-dom';
 
 import PropTypes from 'prop-types';
 
@@ -15,7 +16,7 @@ const index = ({ user : { login, avatar_url, html_url } }) => {
     <UserContainer className="card text-center">
       <ImageItem className="round-img" src={avatar_url} alt={login} />
       <UserName>{login}</UserName>
-      <UserLink><a href={html_url} className="btn btn-dark btn-sm my-1">More</a></UserLink>
+      <UserLink><Link to={`/user/${login}`} className="btn btn-dark btn-sm my-1">More</Link></UserLink>
     </UserContainer>
   )
 }
