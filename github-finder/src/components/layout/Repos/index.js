@@ -4,14 +4,14 @@ import PropTypes from 'prop-types';
 import RepoItem from '../RepoItem';
 
 
-const index = ({ repos }) => {
+const Repos = ({ repos }) => {
   return repos.map( repo =>  (
   	<RepoItem key={repo.id} repo={repo} />
   ) );
 }
 
-index.PropTypes = {
+Repos.propTypes = {
 	repos: PropTypes.array.isRequired
 };
 
-export default index;
+export default Repos;

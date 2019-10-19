@@ -10,7 +10,7 @@ import {
   UserLink
 } from './style';
 
-const index = ({ user : { login, avatar_url, html_url } }) => {
+const UserItems = ({ user : { login, avatar_url, html_url } }) => {
   
   return (
     <UserContainer className="card text-center">
@@ -21,8 +21,8 @@ const index = ({ user : { login, avatar_url, html_url } }) => {
   )
 }
 
-index.propTypes = {
+UserItems.propTypes = {
   user : PropTypes.object.isRequired,
 }
 
-export default index;
+export default UserItems;

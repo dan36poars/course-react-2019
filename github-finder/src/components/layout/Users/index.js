@@ -9,7 +9,7 @@ import UserItem from '../UserItems';
 
 import Spinner from '../Spinner';
 
-const index = ({ loading, users }) => { 
+const Users = ({ loading, users }) => { 
     if (loading) {
       return <Spinner />
     } else {
@@ -21,11 +21,11 @@ const index = ({ loading, users }) => {
         </UserContainer>
       )
     }
-}
+};
 
-index.propTypes = {
+Users.propTypes = {
   users : PropTypes.array.isRequired,
   loading: PropTypes.bool.isRequired
-}
+};
 
-export default index;
+export default Users;

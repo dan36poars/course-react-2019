@@ -5,7 +5,7 @@ import {
 	AlertContainer
 } from './style';
 
-const index = ({ alert }) => {
+const Alert = ({ alert }) => {
 
 		return (
 			<AlertContainer>
@@ -19,8 +19,8 @@ const index = ({ alert }) => {
 
 }
 
-index.propTypes = {
+Alert.propTypes = {
     alert: PropTypes.object
 };
 
-export default index;
+export default Alert;

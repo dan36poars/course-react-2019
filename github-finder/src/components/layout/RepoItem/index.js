@@ -4,7 +4,7 @@ import {
   TagLink
 } from './style';
 
-function index({ repo }) {
+const RepoItem = ({ repo }) => {
   return (
     <div className="card" >
       <h3>
@@ -14,8 +14,8 @@ function index({ repo }) {
   )
 }
 
-index.propTypes = {
+RepoItem.propTypes = {
     repo: PropTypes.object.isRequired
 };
 
-export default index;
+export default RepoItem;
