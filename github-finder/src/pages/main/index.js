@@ -10,27 +10,28 @@ import User from '../../components/layout/User';
 import Navbar from '../../components/layout/Navbar/Navbar';
 import About from '../about';
 
+import GithubState from '../../context/github/GithubState';
+
 const Main = () => {
 
-    const [users, setUsers] = useState([]);
-    const [user, setUser] = useState({});
+
     const [repos, setRepos] = useState([]);
     const [loading, setLoading] = useState(false);
     const [alert, setAlert] = useState(null);
 
-    const searchUsers = async (text) => {
-        setLoading(true);
-        const response = await axios.get(`https://api.github.com/search/users?q=${text}&client_id=${process.env.REACT_APP_GITHUB_CLIENT_ID}&client_secret=${process.env.REACT_APP_GITHUB_CLIENT_SECRET}`);
-        setUsers(response.data.items);
-        setLoading(false);
-    };
+    // const searchUsers = async (text) => {
+    //     setLoading(true);
+    //     const response = await axios.get(`https://api.github.com/search/users?q=${text}&client_id=${process.env.REACT_APP_GITHUB_CLIENT_ID}&client_secret=${process.env.REACT_APP_GITHUB_CLIENT_SECRET}`);
+    //     setUsers(response.data.items);
+    //     setLoading(false);
+    // };
 
-    const getUser = async (username) => {
-      setLoading(true);
-      const response = await axios.get(`https://api.github.com/users/${username}?client_id=${process.env.REACT_APP_GITHUB_CLIENT_ID}&client_secret=${process.env.REACT_APP_GITHUB_CLIENT_SECRET}`);
-      setUser(response.data);
-      setLoading(false);
-    };
+    // const getUser = async (username) => {
+    //   setLoading(true);
+    //   const response = await axios.get(`https://api.github.com/users/${username}?client_id=${process.env.REACT_APP_GITHUB_CLIENT_ID}&client_secret=${process.env.REACT_APP_GITHUB_CLIENT_SECRET}`);
+    //   setUser(response.data);
+    //   setLoading(false);
+    // };
 
     const getUsersRepos = async (username) => {
       setLoading(true);
@@ -39,10 +40,10 @@ const Main = () => {
       setLoading(false);
     }
 
-    const handleClearUsers = () => {
-        setUsers([]);
-        setLoading(false);       
-    };
+    // const handleClearUsers = () => {
+    //     setUsers([]);
+    //     setLoading(false);       
+    // };
 
     const showAlert = ( msg, type ) => {
       setAlert({ msg, type });
@@ -51,42 +52,37 @@ const Main = () => {
     };
 
     return (
-        <BrowserRouter>          
-           <Navbar />
-            <div className="container">
-              <Alert alert={alert}/>
-              <Switch>
-                <Route 
-                  exact 
-                  path="/"
-                  render={ props => (
-                    <>
-                    <Search 
-                      searchUsers={searchUsers} 
-                      handleClearUsers={handleClearUsers}
-                      showClear={ (users.length > 0) ? true : false }
-                      setAlert={showAlert}
-                    />                    
-                    <Users loading={loading} users={users} />
-                    </>
-                  ) }
-                />
-                <Route path='/about' component={About} />
-                <Route path='/user/:login' render={ props => (
-                  <User 
-                    {...props} 
-                    getUser={getUser}
-                    getUsersRepos={getUsersRepos}
-                    user={user}
-                    repos={repos}
-                    loading={loading} 
-                  /> 
-                  )}
-                />
-              </Switch>
-            </div>
-           
-        </BrowserRouter>
+        <GithubState>
+          <BrowserRouter>          
+             <Navbar />
+              <div className="container">
+                <Alert alert={alert}/>
+                <Switch>
+                  <Route 
+                    exact 
+                    path="/"
+                    render={ props => (
+                      <>
+                      <Search                         
+                        setAlert={showAlert}
+                      />                    
+                      <Users />
+                      </>
+                    ) }
+                  />
+                  <Route path='/about' component={About} />
+                  <Route path='/user/:login' render={ props => (
+                    <User 
+                      {...props}                      
+                      getUsersRepos={getUsersRepos}
+                      repos={repos}
+                    /> 
+                    )}
+                  />
+                </Switch>
+              </div>           
+          </BrowserRouter>
+        </GithubState>
       )
 };
 
