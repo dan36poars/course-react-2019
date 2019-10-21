@@ -8,7 +8,7 @@ const RepoItem = ({ repo }) => {
   return (
     <div className="card" >
       <h3>
-        <TagLink href={repo.html_url}>{repo.name}</TagLink>
+        <TagLink href={repo.html_url} target="_blank">{repo.name}</TagLink>
       </h3>
     </div>
   )

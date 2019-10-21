@@ -1,6 +1,6 @@
 import React, { useEffect, useContext } from 'react';
 import { Link } from 'react-router-dom';
-import PropTypes from 'prop-types';
+
 
 import Repos from '../../layout/Repos';
 import Spinner from '../../layout/Spinner';
@@ -8,11 +8,11 @@ import { ImgAvatar } from './style';
 
 import GithubContext from '../../../context/github/githubContext';
 
-const User = ({ getUsersRepos, repos, match }) => {
+const User = ({ match }) => {
 
   const githubContext = useContext(GithubContext)
 
-  const { getUser, loading, user } = githubContext;
+  const { getUsersRepos, getUser, loading, user, repos } = githubContext;
 
   useEffect(() => {
     getUser(match.params.login);
@@ -95,9 +95,5 @@ const User = ({ getUsersRepos, repos, match }) => {
     </>
   )
 }
-
-User.propTypes = {   
-  repos: PropTypes.array.isRequired,
-};
 
 export default User;
