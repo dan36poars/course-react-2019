@@ -1,0 +1,4 @@
+{
+	"mongoURI" : "mongodb+srv://contactkeeper:grem29rsdapoa1981@cluster0-9jotn.mongodb.net/contactkeeper?retryWrites=true&w=majority",
+	"jwtSecret" : "gremsecretalgth"
+}

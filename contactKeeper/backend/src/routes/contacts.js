@@ -1,33 +1,36 @@
 const express = require('express');
+const auth = require('../middleware/auth');
+const { check } = require('express-validator');
 
-const router = express.Router();
+// controller
+const ContactController = require('../controllers/ContactController');
+
+const route = express.Router();
 
 // @route    GET api/contacts
 // @desc     Get all users contacts
 // @access   Private
-router.get('/', (req, res) => {
-  res.json({ msg: "Get all users contacts." });
-});
+route.get('/', auth, ContactController.index );
 
 // @route    POST api/contacts
 // @desc     Add new contact
 // @access   Private
-router.post('/', (req, res) => {
+route.post('/', (req, res) => {
   res.json({ msg: "Add new contact." });
 });
 
 // @route    PUT api/contacts/:id
 // @desc     Update a contact
 // @access   Private
-router.put('/:id', (req, res) => {
+route.put('/:id', (req, res) => {
   res.json({ msg: "Update a contact." });
 });
 
 // @route    DELETE api/contacts/:id
 // @desc     Delete contact
 // @access   Private
-router.delete('/:id', (req, res) => {
+route.delete('/:id', (req, res) => {
   res.json({ msg: "Delete contact." });
 });
 
-module.exports = router;
+module.exports = route;
