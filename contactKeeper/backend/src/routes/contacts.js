@@ -15,14 +15,16 @@ route.get('/', auth, ContactController.index );
 // @route    POST api/contacts
 // @desc     Add new contact
 // @access   Private
-route.post('/', (req, res) => {
-  res.json({ msg: "Add new contact." });
-});
+route.post('/', [auth,[
+	check('name', 'Name is Required').not().isEmpty(),
+	check('email', 'Email is Required').isEmail(),
+	check('phone', 'Phone is Required with 11 digits').isLength({	max: 11, min: 11 })
+	]], ContactController.store );
 
 // @route    PUT api/contacts/:id
 // @desc     Update a contact
 // @access   Private
-route.put('/:id', (req, res) => {
+route.put('/:id', auth, (req, res) => {
   res.json({ msg: "Update a contact." });
 });
 
