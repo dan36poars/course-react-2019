@@ -1,17 +1,19 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import styled from 'styled-components';
+import Contacts from '../../components/Contacts';
+import ContactForm from '../../components/ContactForm';
 
 const Home = () => {
     return (
-        <div>
-        	hello home
+        <div className="grid-2 container">
+        	<div>
+        		<ContactForm />
+        	</div>
+        	<div>
+        		<Contacts />
+        	</div>
         </div>
     )
 };
-
-
-
-Home.propTypes = {};
 
 export default Home;

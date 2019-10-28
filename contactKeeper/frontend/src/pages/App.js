@@ -6,19 +6,21 @@ import Navbar from './../components/Navbar';
 import Home from './home';
 import About from './about';
 
+import ContactState from '../context/contact/ContactState';
+
 
 function App() {
   return (
-    <Router>
-      <GlobalStyles />    
-      <Navbar/>
-      <Switch>
-        <div className="container">
+    <ContactState>
+      <Router>
+        <GlobalStyles />    
+        <Navbar/>
+        <Switch>
           <Route exact path="/" component={Home} />
-          <Route exact path="/about" component={About} />
-        </div>
-      </Switch>
-    </Router>
+          <Route exact path="/about" component={About} />         
+        </Switch>
+      </Router>
+    </ContactState>
   )
 }
 
