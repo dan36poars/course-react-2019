@@ -1,5 +1,4 @@
 import React from 'react'
-import style from 'styled-components';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 
@@ -13,6 +12,8 @@ const Navbar = ({ title, icon }) => {
         <li>
           <Link to="/">Home</Link>
           <Link to="/about">About</Link>
+          <Link to="/register">Register</Link>
+          <Link to="/login">Login</Link>
         </li>
       </ul>
     </div>
