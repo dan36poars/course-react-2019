@@ -1,51 +1,94 @@
 import React, { useReducer }from 'react';
+import axios from 'axios';
 import AuthContext from './AuthContext';
 import authReducer from './AuthReducer';
 
+import setAuthToken from '../../utils/setAuthToken';
+
 import { 
-	REGISTER_SUCCESS,
-	REGISTER_FAIL,
-	USER_LOADED,
-	AUTH_ERROR,
-	LOGIN_SUCCESS,
-	LOGIN_FAIL,
-	LOGOUT,
-	CLEAR_ERRORS
+  REGISTER_SUCCESS,
+  REGISTER_FAIL,
+  USER_LOADED,
+  AUTH_ERROR,
+  LOGIN_SUCCESS,
+  LOGIN_FAIL,
+  LOGOUT,
+  CLEAR_ERRORS
 } from '../types';
 
 const AuthState = props => {
-	const initialState = {
-		token: localStorage.getItem('token'),
-		isAuthenticated: null,
-		user: null,
-		loading: true,
-		error: null
-	};
+  const initialState = {
+    token: localStorage.getItem('token'),
+    isAuthenticated: null,
+    user: null,
+    loading: true,
+    error: null
+  };
 
-	const [state, dispatch] = useReducer(authReducer, initialState);
+  const [state, dispatch] = useReducer(authReducer, initialState);
 
-	// Load user
+  // Load user
+  const loadUser = async () => {
+    if (localStorage.token) {
+      setAuthToken(localStorage.token);
+    }
 
-	// Register user
+    try {
+      const res = await axios.get('/api/auth');
+      dispatch({ type: USER_LOADED, payload: res.data });
+    } catch(e) {
+      dispatch({ type: AUTH_ERROR });
+    }
 
-	// Login user
+  };
 
-	// Logout
+  // Register user
+  const register = async (formData) => {
+    const config = {
+      headers : {       
+        "Content-Type" : "application/json"
+      }
+    }
 
-	// Clear errors
+    try {
 
-	return (
-		<AuthContext.Provider
-			value={{
-				token: state.token,
-				isAuthenticated: state.isAuthenticated,
-				user: state.user,
-				loading: state.loading,
-				error: state.error
-		}}>
-			{props.children}
-		</AuthContext.Provider>
-	);
+      const res = await axios.post('/api/users', formData, config );
+      dispatch({ type: REGISTER_SUCCESS, payload: res.data });
+
+      loadUser();
+
+    } catch(e) {      
+      dispatch({ type: REGISTER_FAIL, payload: e.response.data.msg });
+    }
+
+  }
+
+  // Login user
+  const login = () => console.log('login');
+
+  // Logout
+  const loggout = () => console.log('loggout');
+
+  // Clear errors
+  const clearErrors = () => dispatch({ type: CLEAR_ERRORS });
+
+  return (
+    <AuthContext.Provider
+      value={{
+        token: state.token,
+        isAuthenticated: state.isAuthenticated,
+        user: state.user,
+        loading: state.loading,
+        error: state.error,
+        register,
+        loadUser,
+        login,
+        loggout,
+        clearErrors
+    }}>
+      {props.children}
+    </AuthContext.Provider>
+  );
 
 
 };
